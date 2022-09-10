@@ -1,0 +1,26 @@
+- name: Install Docker
+  xbps:
+    name:
+      - docker
+      - docker-compose
+      - python3-docker
+
+- name: Install python compose module
+  pip:
+    name: docker-compose
+
+- name: Enable Docker service
+  runit:
+    name: docker
+    enabled: yes
+
+- name: Add Docker projects dir
+  file:
+    path: /opt/containers
+    state: directory
+    owner: root
+    group: root
+    mode: '0750'
+
+- include_tasks: containers/unifi-protect-backup.yml
+- include_tasks: containers/homebridge.yml

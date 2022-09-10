@@ -1,0 +1,27 @@
+{
+  "bridge": {
+      "name": "Homebridge 0D1D",
+      "username": "0E:3B:63:64:0D:1D",
+      "port": 51558,
+      "pin": "{{ homebridge_config_pin }}",
+      "advertiser": "bonjour-hap"
+  },
+  "accessories": [],
+  "platforms": [
+      {
+          "name": "Config",
+          "port": 8581,
+          "platform": "config"
+      },
+      {
+          "controllers": [
+              {
+                  "address": "{{ unifi_dream_machine_address }}",
+                  "password": "{{ homebridge_unifi_protect_password }}",
+                  "username": "{{ homebridge_unifi_protect_username }}"
+              }
+          ],
+          "platform": "UniFi Protect"
+      }
+  ]
+}

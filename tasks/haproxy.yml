@@ -1,0 +1,19 @@
+- name: Install HAProxy
+  xbps:
+    name: haproxy
+
+- name: Update HAProxy config
+  template:
+    src: templates/haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: '0644'
+    validate: haproxy -f %s -c -q
+  notify:
+    - restart haproxy
+
+- name: Enable HAProxy
+  runit:
+    name: haproxy
+    enabled: yes

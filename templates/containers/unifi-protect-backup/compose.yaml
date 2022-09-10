@@ -1,0 +1,23 @@
+services:
+  backup:
+    container_name: protect-backup
+    restart: unless-stopped
+
+    image: ghcr.io/ep1cman/unifi-protect-backup
+
+    environment:
+      TZ: 'America/New_York'
+      UFP_USERNAME: {{ unifi_protect_backup_username }}
+      UFP_PASSWORD: {{ unifi_protect_backup_password }}
+      UFP_ADDRESS: {{ unifi_dream_machine_address }}
+      UFP_SSL_VERIFY: 'false'
+      RCLONE_DESTINATION: 'dropbox:/Unifi/protect-backup/'
+
+    volumes:
+      - type: bind
+        source: /opt/containers/unifi-protect-backup/conf
+        target: /root/.config/rclone
+
+      - type: bind
+        source: /opt/containers/unifi-protect-backup/data
+        target: /data

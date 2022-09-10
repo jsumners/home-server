@@ -1,0 +1,27 @@
+- name: Add gandi-dyndns client
+  unarchive:
+    remote_src: yes
+    src: https://github.com/jsumners/gandi-dyndns/releases/download/v0.1.0/gandi-dyndns_0.1.0_Linux_x86_64.tar.gz
+    dest: /usr/local/bin
+
+- name: Add gandi-dyndns config directory
+  file:
+    dest: /etc/gdyndns
+    state: directory
+    owner: root
+    group: root
+    mode: '0750'
+
+- name: Add gandi-dyndns config
+  template:
+    src: templates/gandi-dyndns.yaml
+    dest: /etc/gdyndns/config.yaml
+    owner: root
+    group: root
+    mode: '0750'
+
+- name: Add dynip cronjob
+  cron:
+    name: "refresh dyn dns records"
+    special_time: hourly
+    job: "/usr/local/bin/gandi-dyndns 2>&1"

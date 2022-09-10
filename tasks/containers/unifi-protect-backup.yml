@@ -1,0 +1,26 @@
+- name: (upb) add container dir
+  file:
+    path: /opt/containers/unifi-protect-backup
+    state: directory
+
+- name: (upb) add volume dirs
+  file:
+    path: "/opt/containers/unifi-protect-backup/{{ item }}"
+    state: directory
+  with_items:
+    - conf
+    - data
+
+- name: (upb) add compose file
+  template:
+    src: templates/containers/unifi-protect-backup/compose.yaml
+    dest: /opt/containers/unifi-protect-backup/compose.yaml
+
+- name: (upb) add rclone conf
+  template:
+    src: templates/containers/unifi-protect-backup/rclone.ini
+    dest: /opt/containers/unifi-protect-backup/conf/rclone.conf
+
+- name: (upb) add service
+  community.docker.docker_compose:
+    project_src: /opt/containers/unifi-protect-backup/

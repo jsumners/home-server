@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "homebridge": "1.5.0",
+    "homebridge-hue": "0.13.44",
+    "homebridge-unifi-protect": "5.5.4"
+  }
+}

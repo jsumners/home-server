@@ -1,0 +1,9 @@
+gandi_v5_api_key: {{ gandi_api_key }}
+
+records:
+{% for record in dns_records %}
+  - zone: '{{record.zone}}'
+    type: '{{record.type}}'
+    name: '{{record.name}}'
+    ttl: {{record.ttl}}
+{% endfor %}

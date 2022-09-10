@@ -1,0 +1,24 @@
+- name: Install Lego
+  xbps:
+    name:
+      - lego
+
+- name: Add ZeroSSL scripts
+  template:
+    src: "templates/{{ item.src }}"
+    dest: "/usr/local/bin/{{ item.dest }}"
+    owner: root
+    group: root
+    mode: '0750'
+  with_items:
+    - { src: "generate-certs.sh", dest: "generate-certs" }
+    - { src: "renew-certs.sh", dest: "renew-certs" }
+
+- name: Add ACME cronjob
+  cron:
+    name: "refresh certs"
+    job: "/usr/local/bin/renew-certs 2>&1"
+    user: root
+    minute: 35
+    hour: 12
+    day: 15

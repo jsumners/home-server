@@ -1,0 +1,69 @@
+---
+- name: home-server setup
+  hosts: all
+  become: yes
+  vars_files:
+    - vars/main.yml
+    - vars/secret.yml
+
+  handlers:
+    - name: restart sshd
+      runit:
+        name: sshd
+        state: restarted
+
+    - name: restart haproxy
+      runit:
+        name: haproxy
+        state: restarted
+
+  tasks:
+    - include_tasks: tasks/xbps.yml
+
+    - name: Install packages
+      xbps:
+        name:
+          - bat
+          - chrony
+          - cronie
+          - curl
+          - lsof
+          - jq
+          - python3
+          - python3-pip
+          - python3-setuptools
+          - ripgrep
+          - socklog
+          - socklog-void
+          - ssh-audit
+          - vim-huge
+          - zsh
+
+    - name: Enable socklog
+      runit:
+        name: socklog-unix
+        enabled: yes
+
+    - name: Enable chrony
+      runit:
+        name: chronyd
+        enabled: yes
+
+    - name: Enable cronie
+      runit:
+        name: cronie
+        enabled: yes
+
+    - name: Set user shell
+      user:
+        name: "{{ item }}"
+        shell: /bin/zsh
+      with_items:
+        - root
+        - jsumners
+
+    - include_tasks: tasks/certs.yml
+    - include_tasks: tasks/haproxy.yml
+    - include_tasks: tasks/lego.yml
+    - include_tasks: tasks/docker.yml
+    - include_tasks: tasks/dynip.yml

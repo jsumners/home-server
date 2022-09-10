@@ -1,0 +1,24 @@
+services:
+  homebridge:
+    container_name: homebridge
+    restart: unless-stopped
+
+    image: oznu/homebridge
+
+    environment:
+      TZ: 'America/New_York'
+
+    network_mode: host
+    # ports:
+    #   - '8551:8551'
+
+    volumes:
+      - type: bind
+        source: /opt/containers/homebridge/data
+        target: /homebridge
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10mb"
+        max-file: "1"

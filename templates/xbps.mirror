@@ -1,0 +1,5 @@
+repository=https://mirrors.servercentral.com/voidlinux/current
+repository=https://mirrors.servercentral.com/voidlinux/current/nonfree
+
+#repository=https://alpha.us.repo.voidlinux.org/current
+#repository=https://alpha.us.repo.voidlinux.org/current/nonfree

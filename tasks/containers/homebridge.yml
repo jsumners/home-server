@@ -1,0 +1,29 @@
+- name: (homebridge) add container dir
+  file:
+    path: /opt/containers/homebridge
+    state: directory
+
+- name: (homebridge) add volume dirs
+  file:
+    path: "/opt/containers/homebridge/{{ item }}"
+    state: directory
+  with_items:
+    - data
+
+- name: (homebridge) add compose file
+  template:
+    src: templates/containers/homebridge/compose.yaml
+    dest: /opt/containers/homebridge/compose.yaml
+
+- name: (homebridge) add conf files
+  template:
+    src: "templates/containers/homebridge/{{ item }}"
+    dest: "/opt/containers/homebridge/data/{{ item }}"
+  with_items:
+    - auth.json
+    - config.json
+    - package.json
+
+- name: (homebridge) add service
+  community.docker.docker_compose:
+    project_src: /opt/containers/homebridge/
