@@ -37,6 +37,7 @@
       xbps:
         name:
           - bat
+          - bind-utils
           - chrony
           - cronie
           - curl
