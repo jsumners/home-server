@@ -1,0 +1,26 @@
+- name: Install radvd
+  xbps:
+    name: radvd
+
+- name: Update radvd config
+  template:
+    src: templates/radvd.conf
+    dest: /etc/radvd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - restart radvd
+
+- name: Enable radvd
+  runit:
+    name: radvd
+    enabled: yes
+
+- name: Enable IPv6 forwarding
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes

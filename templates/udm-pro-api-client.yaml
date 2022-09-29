@@ -1,0 +1,10 @@
+address: {{ unifi_dream_machine_address }}
+username: {{ udm_pro_api_client_username }}
+password: {{ udm_pro_api_client_password }}
+site: default
+
+fixed_only: false
+
+host_aliases:
+  - name: router
+    ip_address: {{ unifi_dream_machine_address }}

@@ -7,14 +7,27 @@
     - vars/secret.yml
 
   handlers:
-    - name: restart sshd
+    - name: restart dnsmasq
       runit:
-        name: sshd
+        name: dnsmasq
         state: restarted
 
     - name: restart haproxy
       runit:
         name: haproxy
+        state: restarted
+
+    - name: restart network
+      command: /etc/rc.local
+
+    - name: restart radvd
+      runit:
+        name: radvd
+        state: restarted
+
+    - name: restart sshd
+      runit:
+        name: sshd
         state: restarted
 
   tasks:
@@ -29,6 +42,7 @@
           - curl
           - lsof
           - jq
+          - most
           - python3
           - python3-pip
           - python3-setuptools
@@ -62,8 +76,20 @@
         - root
         - jsumners
 
+    - name: Update rc.local
+      template:
+        src: templates/rc.local
+        dest: /etc/rc.local
+        owner: root
+        group: root
+        mode: '0755'
+      notify:
+        - restart network
+
+    - include_tasks: tasks/radvd.yml
     - include_tasks: tasks/certs.yml
     - include_tasks: tasks/haproxy.yml
     - include_tasks: tasks/lego.yml
     - include_tasks: tasks/docker.yml
     - include_tasks: tasks/dynip.yml
+    - include_tasks: tasks/dnsmasq.yml
