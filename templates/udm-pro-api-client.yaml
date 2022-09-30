@@ -7,4 +7,4 @@ fixed_only: false
 
 host_aliases:
   - name: router
-    ip_address: {{ unifi_dream_machine_address }}
+    ip_address: {{ ansible_default_ipv4.address }}
