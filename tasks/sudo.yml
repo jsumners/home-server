@@ -1,0 +1,6 @@
+- name: Add wheel sudo config
+  template:
+    src: templates/sudoers.wheel
+    dest: /etc/sudoers.d/wheel
+    owner: root
+    mode: '0440'

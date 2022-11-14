@@ -87,6 +87,7 @@
       notify:
         - restart network
 
+    - include_tasks: tasks/sudo.yml
     - include_tasks: tasks/radvd.yml
     - include_tasks: tasks/certs.yml
     - include_tasks: tasks/haproxy.yml
