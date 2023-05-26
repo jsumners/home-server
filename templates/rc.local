@@ -1,8 +1,10 @@
 #!/bin/sh
 
-IP_IS_SET=$(ip -j addr show dev {{ ethernet_dev0 }} \
+ip -j addr show dev {{ ethernet_dev0 }} \
   | jq -e '.[0].addr_info[] | select(.local == "fd01:1::1")'
-)
+
+IP_IS_SET=$?
+
 if [ ${IP_IS_SET} -ne 0 ]; then
   ip addr add fd01:1::1/64 dev {{ ethernet_dev0 }}
 fi
