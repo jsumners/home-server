@@ -6,9 +6,10 @@ local DNS and Unifi Protect video backup).
 
 ## Setup
 
-1. Install Ansible: `pip install --user git+https://github.com/ansible/ansible.git@v2.13.3`
+1. Install Ansible: `pip3 install --user git+https://github.com/ansible/ansible.git@v2.15.5`
+1. Run: `ansible-galaxy install -r requirements.yml`
 1. Add vault password to `.vault-pass`
-1. Install `sshpass`: `sudo port install sshpass`
+1. Install `sshpass`: https://github.com/jsumners/dotfiles/blob/f62ad272e9ba07fc3649e7b0deb96ff261304f90/install-sshpass.sh
 
 ## Server Prep
 
