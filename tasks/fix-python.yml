@@ -1,0 +1,11 @@
+# https://voidlinux.org/news/2023/10/python3-external.html
+# https://web.archive.org/web/20240120183443/https://voidlinux.org/news/2023/10/python3-external.html
+#
+# With that nonsense applied, we cannot `pip install ANYTHING_AT_ALL`
+#
+# https://stackoverflow.com/a/77334728/7979
+
+- name: Fix python
+  template:
+    src: pip.conf
+    dest: /etc/pip.conf

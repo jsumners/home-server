@@ -5,10 +5,6 @@
       - docker-compose
       - python3-docker
 
-- name: Install python compose module
-  pip:
-    name: docker-compose
-
 - name: Enable Docker service
   runit:
     name: docker

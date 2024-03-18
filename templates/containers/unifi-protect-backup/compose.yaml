@@ -3,7 +3,18 @@ services:
     container_name: protect-backup
     restart: unless-stopped
 
-    image: ghcr.io/ep1cman/unifi-protect-backup
+    # Fuck it! I have no idea how to get a docker compose managed container
+    # to resolve hostname any other way.
+    network_mode: host
+
+    image: ghcr.io/ep1cman/unifi-protect-backup:0.10.5
+
+    logging:
+      driver: json-file
+      options:
+        max-size: 100m
+        max-file: 3
+        compress: 'true'
 
     environment:
       TZ: 'America/New_York'
@@ -12,12 +23,17 @@ services:
       UFP_ADDRESS: {{ unifi_dream_machine_address }}
       UFP_SSL_VERIFY: 'false'
       RCLONE_DESTINATION: 'dropbox:/Unifi/protect-backup/'
+      RCLONE_CONFIG: /config/rclone/rclone.conf
 
     volumes:
       - type: bind
-        source: /opt/containers/unifi-protect-backup/conf
-        target: /root/.config/rclone
-
-      - type: bind
         source: /opt/containers/unifi-protect-backup/data
         target: /data
+
+      - type: bind
+        source: /opt/containers/unifi-protect-backup/rclone.conf
+        target: /config/rclone/rclone.conf
+
+      - type: bind
+        source: /opt/containers/unifi-protect-backup/persistent_storage
+        target: /config/database

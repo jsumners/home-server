@@ -8,8 +8,8 @@
     path: "/opt/containers/unifi-protect-backup/{{ item }}"
     state: directory
   with_items:
-    - conf
     - data
+    - persistent_storage
 
 - name: (upb) add compose file
   template:
@@ -19,8 +19,8 @@
 - name: (upb) add rclone conf
   template:
     src: templates/containers/unifi-protect-backup/rclone.ini
-    dest: /opt/containers/unifi-protect-backup/conf/rclone.conf
+    dest: /opt/containers/unifi-protect-backup/rclone.conf
 
 - name: (upb) add service
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: /opt/containers/unifi-protect-backup/

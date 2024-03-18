@@ -88,6 +88,8 @@
       notify:
         - restart network
 
+    - include_tasks: tasks/fix-python.yml
+
     - include_tasks: tasks/sudo.yml
     - include_tasks: tasks/radvd.yml
     - include_tasks: tasks/certs.yml
