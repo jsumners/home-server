@@ -98,3 +98,4 @@
     - include_tasks: tasks/docker.yml
     - include_tasks: tasks/dynip.yml
     - include_tasks: tasks/dnsmasq.yml
+    - include_tasks: tasks/udm-pro-client.yml

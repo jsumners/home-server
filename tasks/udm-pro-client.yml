@@ -1,0 +1,47 @@
+- name: Add udm-pro-api-client
+  unarchive:
+    remote_src: yes
+    src: https://github.com/jsumners/udm-pro-api-client/releases/download/v0.2.0/udm-pro-api-client_0.2.0_linux_amd64.tar.gz
+    dest: /usr/local/bin
+    exclude:
+      - LICENSE
+
+- name: Add udm-pro-api-client config
+  template:
+    src: templates/udm-pro-api-client.yaml
+    dest: /etc/udm-pro-api-client.yaml
+    owner: root
+    group: root
+    mode: '0640'
+
+- name: Add get-network-hosts
+  template:
+    src: templates/get-network-hosts.sh
+    dest: /usr/local/bin/get-network-hosts
+    owner: root
+    group: root
+    mode: '0750'
+
+- name: Add restart-access-point
+  template:
+    src: templates/restart-access-point.sh
+    dest: /usr/local/bin/restart-access-point
+    owner: root
+    group: root
+    mode: '0750'
+
+- name: Add get-network-hosts cronjob
+  cron:
+    name: "get network hosts"
+    job: "/usr/local/bin/get-network-hosts"
+    user: root
+    minute: '*/5'
+
+- name: Add restart-access-point cronjob
+  cron:
+    name: "restart access point"
+    job: "/usr/local/bin/restart-access-point"
+    user: root
+    weekday: 0 # Sunday
+    hour: 3
+    minute: 0
