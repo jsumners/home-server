@@ -41,9 +41,11 @@
           - chrony
           - cronie
           - curl
+          - hddtemp
           - lsof
           - jq
           - most
+          - nvme-cli
           - psmisc
           - python3
           - python3-pip
