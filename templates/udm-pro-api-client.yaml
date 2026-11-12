@@ -8,3 +8,5 @@ fixed_only: false
 host_aliases:
   - name: router
     ip_address: {{ ansible_facts.default_ipv4.address }}
+  - name: wap
+    ip_address: 192.168.1.3
